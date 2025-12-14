@@ -9,7 +9,7 @@ def main():
 
 
     # df = pd.read_csv(s, header=None, encoding='utf-8')
-    # df = pl.read_csv
+    df = pl.read_csv()
 
 
 
