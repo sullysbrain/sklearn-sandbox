@@ -5,30 +5,18 @@
     "context": ".."
   },
   
-  // "containerEnv": {
-  //   "UV_LINK_MODE": "copy"              // silence hardlink warnings on macOS/volumes
-  // },
-
-  // After the container starts (with your repo mounted), create .venv and sync deps
-  // "postStartCommand": "uv sync",
-
-  // Make every new terminal behave as if the venv is activated
-  // "remoteEnv": {
-  //   "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
-  //   "PATH": "${containerWorkspaceFolder}/.venv/bin:${PATH}"
-  // },
-
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance"
         // "ms-toolsai.jupyter"
-      ]
-      // "settings": {
+      ],
+      "settings": {
         // "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
-        // "python.terminal.activateEnvironment": true
-      // }
+        "python.defaultInterpreterPath": "/opt/venv/bin/python",
+        "python.terminal.activateEnvironment": false
+      }
     }
   }
 }
