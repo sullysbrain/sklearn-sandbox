@@ -12,6 +12,9 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin s
 ENV VIRTUAL_ENV=/opt/venv
 RUN python -m venv "$VIRTUAL_ENV"
 
+RUN chown -R vscode:vscode "$VIRTUAL_ENV"
+
+
 # Ensure every shell starts with the venv on PATH
 ENV PATH="$VIRTUAL_ENV/bin:${PATH}"
 RUN printf 'export VIRTUAL_ENV=%s\nexport PATH=%s/bin:$PATH\n' "$VIRTUAL_ENV" "$VIRTUAL_ENV" \

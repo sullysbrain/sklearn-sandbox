@@ -126,7 +126,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pandas", specifier = ">=2.3.3" },
+    { name = "pandas", specifier = ">=2.3.2" },
     { name = "polars", specifier = ">=1.36.1" },
 ]
 
