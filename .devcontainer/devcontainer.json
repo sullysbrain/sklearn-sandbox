@@ -1,19 +1,11 @@
 {
   "name": "python-uv-sync",
-  "build": { 
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
-  
+  "build": { "dockerfile": "Dockerfile", "context": ".." },
+
   "customizations": {
     "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance"
-        // "ms-toolsai.jupyter"
-      ],
+      "extensions": ["ms-python.python", "ms-python.vscode-pylance"],
       "settings": {
-        // "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
         "python.defaultInterpreterPath": "/opt/venv/bin/python",
         "python.terminal.activateEnvironment": false
       }
