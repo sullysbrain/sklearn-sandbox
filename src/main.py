@@ -26,7 +26,7 @@ def main():
     plt.ylabel('Petal length [cm]')
     plt.legend(loc='upper left')
     # plt.show()
-    plt.savefig("plot.png", dpi=150, bbox_inches="tight")
+    plt.savefig("results/plot.png", dpi=150, bbox_inches="tight")
 
 
 if __name__ == "__main__":
