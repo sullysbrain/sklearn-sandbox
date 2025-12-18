@@ -19,7 +19,9 @@
   },
   
   // Run once after the repo is mounted into the container
-  "postCreateCommand": "bash -lc 'set -e; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
+  // "postCreateCommand": "bash -lc 'set -e; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
+  "postCreateCommand": "bash -lc 'set -e; sudo mkdir -p /home/vscode/.cache/uv /home/vscode/.cache/pip; sudo chown -R vscode:vscode /home/vscode/.cache/uv /home/vscode/.cache/pip; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
+
 
   // Optional: persist uv/pip cache so rebuilds are faster (recommended)
   "mounts": [
