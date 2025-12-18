@@ -1,14 +1,29 @@
 {
   "name": "python-uv-sync",
-  "build": { "dockerfile": "Dockerfile", "context": ".." },
+  "build": { 
+    "dockerfile": "Dockerfile", 
+    "context": ".." 
+  },
 
   "customizations": {
     "vscode": {
-      "extensions": ["ms-python.python", "ms-python.vscode-pylance"],
+      "extensions": [
+        "ms-python.python", 
+        "ms-python.vscode-pylance"
+      ],
       "settings": {
         "python.defaultInterpreterPath": "/opt/venv/bin/python",
         "python.terminal.activateEnvironment": false
       }
     }
-  }
+  },
+  
+  // Run once after the repo is mounted into the container
+  "postCreateCommand": "bash -lc 'set -e; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
+
+  // Optional: persist uv/pip cache so rebuilds are faster (recommended)
+  "mounts": [
+    "type=volume,source=uv-cache,target=/home/vscode/.cache/uv",
+    "type=volume,source=pip-cache,target=/home/vscode/.cache/pip"
+  ]
 }

@@ -22,12 +22,13 @@ RUN chown -R vscode:vscode "$VIRTUAL_ENV"
 RUN printf 'export VIRTUAL_ENV=%s\nexport PATH=%s/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$VIRTUAL_ENV" "$VIRTUAL_ENV" \
   > /etc/profile.d/venv.sh
 
+
 # OPTIONAL: run uv sync on container start after the repo is mounted
-ENTRYPOINT ["/bin/bash","-lc","set -e; \
-  if [ -f pyproject.toml ] || [ -f uv.lock ]; then \
-    UV_LINK_MODE=${UV_LINK_MODE:-copy} uv sync --active; \
-  fi; \
-  exec \"$@\""]
+# ENTRYPOINT ["/bin/bash","-lc","set -e; \
+#   if [ -f pyproject.toml ] || [ -f uv.lock ]; then \
+#     UV_LINK_MODE=${UV_LINK_MODE:-copy} uv sync --active; \
+#   fi; \
+#   exec \"$@\""]
 
 
-CMD ["bash"]
+# CMD ["bash"]
