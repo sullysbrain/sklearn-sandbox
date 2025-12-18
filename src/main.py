@@ -2,9 +2,14 @@ import os
 import polars as pl
 import pandas as pd
 import numpy as np
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+from sklearn.linear_model import Perceptron
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 
 def main():
 
@@ -22,11 +27,22 @@ def main():
     plt.scatter(X[:50, 0], X[:50, 1], color='red', marker='o', label='Setosa')
     plt.scatter(X[50:100, 0], X[50:100, 1], color='blue', marker='s', label='Versicolor')
 
-    plt.xlabel('Sepal length [cm]')
-    plt.ylabel('Petal length [cm]')
-    plt.legend(loc='upper left')
+    # plt.xlabel('Sepal length [cm]')
+    # plt.ylabel('Petal length [cm]')
+    # plt.legend(loc='upper left')
+    # # plt.show()
+    # plt.savefig("results/plot.png", dpi=150, bbox_inches="tight")
+
+    ppn = Perceptron(eta0=0.1, max_iter=10)
+    ppn.fit(X, y)
+    plt.plot(range(1, len(ppn.errors_) + 1),
+    ppn.errors_, marker='o')
+    plt.xlabel('Epochs')
+    plt.ylabel('Number of updates')
     # plt.show()
-    plt.savefig("results/plot.png", dpi=150, bbox_inches="tight")
+    plt.savefig("results/plot2.png", dpi=150, bbox_inches="tight")
+
+
 
 
 if __name__ == "__main__":
