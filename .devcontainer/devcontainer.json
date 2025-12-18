@@ -5,6 +5,10 @@
     "context": ".." 
   },
 
+  // Make the bind-mount explicit (host repo -> container workspace)
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -22,8 +26,6 @@
   // "postCreateCommand": "bash -lc 'set -e; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
   "postCreateCommand": "bash -lc 'set -e; sudo mkdir -p /home/vscode/.cache/uv /home/vscode/.cache/pip; sudo chown -R vscode:vscode /home/vscode/.cache/uv /home/vscode/.cache/pip; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
 
-
-  // Optional: persist uv/pip cache so rebuilds are faster (recommended)
   "mounts": [
     "type=volume,source=uv-cache,target=/home/vscode/.cache/uv",
     "type=volume,source=pip-cache,target=/home/vscode/.cache/pip"
