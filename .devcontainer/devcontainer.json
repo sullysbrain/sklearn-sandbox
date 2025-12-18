@@ -35,10 +35,12 @@
   // original
   // "postCreateCommand": "bash -lc 'set -e; sudo mkdir -p /home/vscode/.cache/uv /home/vscode/.cache/pip; sudo chown -R vscode:vscode /home/vscode/.cache/uv /home/vscode/.cache/pip; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
 
+  // "postCreateCommand": "bash -lc 'set -e; if [ -f .devcontainer/p10k/.p10k.zsh ]; then cp -f .devcontainer/p10k/.p10k.zsh /home/vscode/.p10k.zsh; fi; grep -q \"source ~/.p10k.zsh\" /home/vscode/.zshrc || printf \"\\n# Load Powerlevel10k\\n[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh\\n\" >> /home/vscode/.zshrc'",
 
-  "postCreateCommand": "bash -lc 'cp -f .devcontainer/p10k/.p10k.zsh /home/vscode/.p10k.zsh; grep -q \"source ~/.p10k.zsh\" /home/vscode/.zshrc || printf \"\\n# Load Powerlevel10k\\nsource ~/.p10k.zsh\\n\" >> /home/vscode/.zshrc'",
+  "postCreateCommand": "bash -lc 'set -e; sudo mkdir -p /home/vscode/.cache /home/vscode/.cache/uv /home/vscode/.cache/pip; sudo chown -R vscode:vscode /home/vscode/.cache; if [ -f .devcontainer/p10k/.p10k.zsh ]; then cp -f .devcontainer/p10k/.p10k.zsh /home/vscode/.p10k.zsh; fi; grep -q \"source ~/.p10k.zsh\" /home/vscode/.zshrc || printf \"\\n# Load Powerlevel10k\\n[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh\\n\" >> /home/vscode/.zshrc; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
 
-  
+
+
   "mounts": [
     "type=volume,source=uv-cache,target=/home/vscode/.cache/uv",
     "type=volume,source=pip-cache,target=/home/vscode/.cache/pip"
