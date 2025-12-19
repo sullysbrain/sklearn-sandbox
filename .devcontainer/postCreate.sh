@@ -8,6 +8,7 @@ P10K_DST="${VSCODE_HOME}/.p10k.zsh"
 P10K_SRC="${PWD}/.devcontainer/p10k/.p10k.zsh"
 OMZ_DIR="${VSCODE_HOME}/.oh-my-zsh"
 P10K_THEME_DIR="${OMZ_DIR}/custom/themes/powerlevel10k"
+DOTFILES_P10K_URL="${DOTFILES_P10K_URL:-}"
 
 log() { echo "[postCreate] $*"; }
 
@@ -61,12 +62,31 @@ ensure_p10k_theme() {
 }
 
 install_p10k_config() {
-  if [[ -f "${P10K_SRC}" ]]; then
+  local installed="false"
+
+  # 1) Prefer dotfiles repo single-file download (if URL provided)
+  if [[ -n "${DOTFILES_P10K_URL}" ]]; then
+    log "Fetching p10k config from dotfiles URL -> ${P10K_DST}"
+    if curl -fsSL "${DOTFILES_P10K_URL}" -o "${P10K_DST}"; then
+      chown vscode:vscode "${P10K_DST}" || true
+      log "Downloaded p10k config from dotfiles URL ${DOTFILES_P10K_URL}"
+      installed="true"
+    else
+      log "Warning: failed to fetch DOTFILES_P10K_URL (${DOTFILES_P10K_URL}); will try repo fallback"
+    fi
+  fi
+
+  # 2) Fallback: repo-local saved config
+  if [[ "${installed}" != "true" && -f "${P10K_SRC}" ]]; then
     log "Copying saved p10k config -> ${P10K_DST}"
     cp -f "${P10K_SRC}" "${P10K_DST}"
     chown vscode:vscode "${P10K_DST}" || true
-  else
-    log "No saved p10k config at ${P10K_SRC}; leaving default (you can run: p10k configure)"
+    installed="true"
+  fi
+
+  # 3) No config found
+  if [[ "${installed}" != "true" ]]; then
+    log "No p10k config found (dotfiles or repo); leaving default (you can run: p10k configure)"
   fi
 
   # Ensure .zshrc loads it
@@ -79,6 +99,7 @@ install_p10k_config() {
 EOF
   fi
 }
+
 
 set_default_shell_zsh() {
   local zsh_path

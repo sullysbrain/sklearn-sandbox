@@ -5,6 +5,11 @@
     "context": ".." 
   },
 
+  "remoteEnv": {
+    "DOTFILES_P10K_URL": "https://raw.githubusercontent.com/sullysbrain/dotfiles/main/.p10k.zsh"
+  },
+
+  
   // Make the bind-mount explicit (host repo -> container workspace)
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
@@ -32,8 +37,6 @@
     }
   },
   
-  // "postCreateCommand": "bash -lc 'set -e; sudo mkdir -p /home/vscode/.cache /home/vscode/.cache/uv /home/vscode/.cache/pip; sudo chown -R vscode:vscode /home/vscode/.cache; if [ -f .devcontainer/p10k/.p10k.zsh ]; then cp -f .devcontainer/p10k/.p10k.zsh /home/vscode/.p10k.zsh; fi; grep -q \"source ~/.p10k.zsh\" /home/vscode/.zshrc || printf \"\\n# Load Powerlevel10k\\n[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh\\n\" >> /home/vscode/.zshrc; if [ -f pyproject.toml ] || [ -f uv.lock ]; then uv sync --active; fi'",
-
 
   "postCreateCommand": "bash -lc '.devcontainer/postCreate.sh'",
 
