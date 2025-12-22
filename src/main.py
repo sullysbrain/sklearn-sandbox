@@ -142,11 +142,11 @@ class LogisticRegressionGD:
         return np.where(self.activation(self.net_input(X)) >= 0.5, 1, 0)
 
 
-# ------------------------------------
-# Main functions
-# ------------------------------------
+def entropy(p):
+    return -p * np.log2(p) - (1 - p) * np.log2(1 - p)
 
-def main():
+
+def iris_svc():
 
     # Load Iris dataset
     iris = datasets.load_iris()
@@ -173,6 +173,24 @@ def main():
     plt.legend(loc='upper left')
     plt.tight_layout()
     plt.savefig('results/xor_svc.png')
+
+
+
+# ------------------------------------
+# Main functions
+# ------------------------------------
+
+def main():
+    # iris_svc()
+
+    x = np.arange(0.0, 1.0, 0.01)
+
+    ent = [entropy(p) if p !=0 else None for p in x]
+    plt.ylabel('Entropy')
+    plt.xlabel('Class probability')
+    plt.plot(x, ent)
+    plt.savefig('results/entropy.png')
+    
 
 
     
