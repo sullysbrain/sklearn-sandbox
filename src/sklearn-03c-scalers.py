@@ -12,17 +12,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Perceptron, LogisticRegression
-from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 # Datasets
 from sklearn import datasets
 
 # My Models
-# from adaline_sgd import AdalineSGD
-
-# ------------------------------------
-# Constants
-# ------------------------------------
+from adaline_sgd import AdalineSGD
 
 
 # ------------------------------------
@@ -165,14 +160,26 @@ def main():
     X_combined = np.vstack((X_train_std, X_test_std))
     y_combined = np.hstack((y_train, y_test))
 
-    svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
-    svm.fit(X_train_std, y_train)
+    lr = LogisticRegression(C=100.0, solver='lbfgs')
+    lr.fit(X_train_std, y_train)
 
-    plot_decision_regions(X_combined, y_combined, classifier=svm,
+    print(lr.predict_proba(X_test_std[:3, :]))
+    print(lr.predict_proba(X_test_std[:3, :]).sum(axis=1))
+    print(lr.predict_proba(X_test_std[:3, :]).argmax(axis=1))
+    print(lr.predict(X_test_std[:3, :]))
+
+    plot_decision_regions(X_combined, y_combined,
+                          classifier=lr,
                           test_idx=range(105, 150))
+
+    plt.title('Logistic Regression - Gradient Descent (Training set)')
+    plt.xlabel('Petal length [standardized]')
+    plt.ylabel('Petal width [standardized]')
     plt.legend(loc='upper left')
     plt.tight_layout()
-    plt.savefig('results/xor_svc.png')
+    plt.savefig('results/logistic_regression_gd_training2.png')
+
+
 
 
     
