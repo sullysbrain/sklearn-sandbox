@@ -12,7 +12,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Perceptron, LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 # Datasets
@@ -166,52 +165,14 @@ def iris_svc():
     X_combined = np.vstack((X_train_std, X_test_std))
     y_combined = np.hstack((y_train, y_test))
 
-    # svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
-    # svm.fit(X_train_std, y_train)
+    svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
+    svm.fit(X_train_std, y_train)
 
-    forest = RandomForestClassifier(n_estimators=25,
-                                    random_state=1,
-                                    n_jobs=2)
-    forest.fit(X_train_std, y_train)
-    plot_decision_regions(X_combined, y_combined, classifier=forest,
+    plot_decision_regions(X_combined, y_combined, classifier=svm,
                           test_idx=range(105, 150))
     plt.legend(loc='upper left')
     plt.tight_layout()
-    plt.savefig('results/random_forest.png')
-
-
-def random_forest():
-
-    # Load Iris dataset
-    iris = datasets.load_iris()
-    X = iris.data[:, [2, 3]]
-    y = iris.target
-    print('Class labels:', np.unique(y))
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.3, random_state=1, stratify=y)
-
-    sc = StandardScaler()
-    sc.fit(X_train)
-    X_train_std = sc.transform(X_train)
-    X_test_std = sc.transform(X_test)
-
-    X_combined = np.vstack((X_train_std, X_test_std))
-    y_combined = np.hstack((y_train, y_test))
-
-    # svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
-    # svm.fit(X_train_std, y_train)
-
-    forest = RandomForestClassifier(n_estimators=25,
-                                    random_state=1,
-                                    n_jobs=2)
-    forest.fit(X_train_std, y_train)
-    plot_decision_regions(X_combined, y_combined, classifier=forest,
-                          test_idx=range(105, 150))
-    plt.legend(loc='upper left')
-    plt.tight_layout()
-    plt.savefig('results/random_forest.png')
-
+    plt.savefig('results/xor_svc.png')
 
 
 
@@ -224,7 +185,11 @@ def main():
 
     x = np.arange(0.0, 1.0, 0.01)
 
-    random_forest()
+    ent = [entropy(p) if p !=0 else None for p in x]
+    plt.ylabel('Entropy')
+    plt.xlabel('Class probability')
+    plt.plot(x, ent)
+    plt.savefig('results/entropy.png')
     
 
 
