@@ -2,6 +2,7 @@ import os
 import polars as pl
 import pandas as pd
 import numpy as np
+from io import StringIO
 
 import matplotlib
 matplotlib.use("Agg")
@@ -222,9 +223,12 @@ def random_forest():
 def main():
     # iris_svc()
 
-    x = np.arange(0.0, 1.0, 0.01)
+    csv_data = "A, B, C, D\n1.0, 2.0, 3.0, 4.0\n5.0, 6.0,,8.0\n10.,11.0,12.0,"
 
-    random_forest()
+    df = pd.read_csv(StringIO(csv_data))
+    print(df)
+
+    # random_forest()
     
 
 
