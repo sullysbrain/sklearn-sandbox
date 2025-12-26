@@ -228,6 +228,8 @@ def main():
     df = pd.read_csv(StringIO(csv_data))
     print(df)
 
+    print(df.isnull().sum())
+
     # random_forest()
     
 
