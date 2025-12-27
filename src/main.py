@@ -16,6 +16,7 @@ from sklearn.linear_model import Perceptron, LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
+from sklearn.impute import SimpleImputer
 # Datasets
 from sklearn import datasets
 
@@ -200,8 +201,8 @@ def random_forest():
     X_combined = np.vstack((X_train_std, X_test_std))
     y_combined = np.hstack((y_train, y_test))
 
-    # svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
-    # svm.fit(X_train_std, y_train)
+    svm = SVC(kernel='rbf', random_state=1, gamma=10.0, C=1.0)
+    svm.fit(X_train_std, y_train)
 
     forest = RandomForestClassifier(n_estimators=25,
                                     random_state=1,
@@ -216,6 +217,7 @@ def random_forest():
 
 
 
+
 # ------------------------------------
 # Main functions
 # ------------------------------------
@@ -223,12 +225,23 @@ def random_forest():
 def main():
     # iris_svc()
 
-    csv_data = "A, B, C, D\n1.0, 2.0, 3.0, 4.0\n5.0, 6.0,,8.0\n10.,11.0,12.0,"
+    # csv_data = "A, B, C, D\n1.0, 2.0, 3.0, 4.0\n5.0, 6.0,,8.0\n10.,11.0,12.0,"
 
-    df = pd.read_csv(StringIO(csv_data))
+    # df = pd.read_csv(StringIO(csv_data))
+    # print(df)
+
+    # imr = SimpleImputer(missing_values=np.nan, strategy='mean')
+    # imr = imr.fit(df.values)
+    # imputed_data = imr.transform(df.values)
+    # print(imputed_data)    
+
+    df = pd.DataFrame([
+        ['green', 'M', 10.1, 'class2'],
+        ['red', 'L', 13.5, 'class1'],
+        ['blue', 'XL', 15.3, 'class2']])
+    df.columns = ['color', 'size', 'price', 'classlabel']
     print(df)
 
-    print(df.isnull().sum())
 
     # random_forest()
     
