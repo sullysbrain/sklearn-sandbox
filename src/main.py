@@ -242,6 +242,17 @@ def main():
     df.columns = ['color', 'size', 'price', 'classlabel']
     print(df)
 
+    size_mapping = {
+        'XL': 3,
+        'L': 2,
+        'M': 1}
+    df['size'] = df['size'].map(size_mapping)
+    print(df)
+
+    inv_size_mapping = {v: k for k, v in size_mapping.items()}
+    print(df['size'].map(inv_size_mapping))
+
+
 
     # random_forest()
     
