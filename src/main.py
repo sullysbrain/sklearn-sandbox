@@ -9,8 +9,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
-from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Perceptron, LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -238,19 +238,16 @@ def main():
     df = pd.DataFrame([
         ['green', 'M', 10.1, 'class2'],
         ['red', 'L', 13.5, 'class1'],
+        ['red', 'L', 13.5, 'class1'],
+        ['green', 'XL', 12.1, 'class1'],
         ['blue', 'XL', 15.3, 'class2']])
     df.columns = ['color', 'size', 'price', 'classlabel']
     print(df)
 
-    size_mapping = {
-        'XL': 3,
-        'L': 2,
-        'M': 1}
-    df['size'] = df['size'].map(size_mapping)
-    print(df)
+    df_onehot = pd.get_dummies(df[['color', 'size', 'price']])
+    print(df_onehot)
+    
 
-    inv_size_mapping = {v: k for k, v in size_mapping.items()}
-    print(df['size'].map(inv_size_mapping))
 
 
 
