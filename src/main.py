@@ -235,16 +235,16 @@ def main():
     # imputed_data = imr.transform(df.values)
     # print(imputed_data)    
 
-    df = pd.DataFrame([
-        ['green', 'M', 10.1, 'class2'],
-        ['red', 'L', 13.5, 'class1'],
-        ['red', 'L', 13.5, 'class1'],
-        ['green', 'XL', 12.1, 'class1'],
-        ['blue', 'XL', 15.3, 'class2']])
-    df.columns = ['color', 'size', 'price', 'classlabel']
+    df = pl.DataFrame({
+        "foo": [1, 2, None],
+        "bar": ["a", "b", "b"],
+        "baz": [0.1, None, 0.3]
+        })
+    # df.columns = ['color', 'size', 'price', 'classlabel']
     print(df)
 
-    df_onehot = pd.get_dummies(df[['color', 'size', 'price']])
+    # df_onehot = pd.get_dummies(df[['color', 'size', 'price']])
+    df_onehot = pl.DataFrame.to_dummies(df, columns=['bar'])
     print(df_onehot)
     
 
